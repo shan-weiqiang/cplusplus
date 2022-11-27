@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 1.16)
+project(some)
+add_library(some SHARED someclass.cpp)
+add_executable(app app.cpp)
+target_link_libraries(app some)
