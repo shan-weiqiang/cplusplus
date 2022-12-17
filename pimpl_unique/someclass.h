@@ -17,7 +17,7 @@ private:
   // 1. dtor and ctor compile time and code inside these special functions. The
   // compile time of dtor and ctor is when their definition appears in the
   // source file. If no user defined functions found, compiler will compile
-  // these functions at definition of the class. The content of the ctor and
+  // these functions at declaration of the class. The content of the ctor and
   // dtor not only include the user written code block(or empty if compiler
   // generated), but also all the ctor and dtor of base classes and members of
   // the class. All above functions will be inserted into the ctor and dtor of
