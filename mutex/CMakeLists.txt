@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(app)
 add_executable(app app.cpp)
+add_executable(bpp bpp.cpp)
 target_link_libraries(app pthread)
+target_link_libraries(bpp pthread)
