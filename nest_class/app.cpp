@@ -1,11 +1,23 @@
 #include <iostream>
 
-/// 内嵌类是一个独立的类，对enclosing类的成员访问也遵循普通类的要求，
-/// 只不过内嵌类可以访问enclosing类的私有成员，即enclosing类把内嵌类当作了friend
-/// 但是反过来，内嵌类没有把enclosing类当作friend，enclosing类不能访问内嵌类的私有成员
-/// 即便如此内嵌类要想访问enclosing类的私有成员，也要具体传入instance，即具体的对象
+/// Nested classes are like other enclosing class members, so nested classes can
+/// access private members of enclosing class, but rules have to be followed.
+/// Nested classes do not have 'this' pointer of the enclosing class, so nested
+/// classes can not access non-static members of the enclosing class, except
+/// that during construction the 'this' pointer is passed to the nested class.
 
-/// Enclosing class acts like namespace; Nested class is for better encapulasation
+/// Different compiler might have variant treatment about how the nested classes
+/// access memebers of the enclosing class. For example, gnu g++ allow
+/// static-members AND unevaluated access of enclosing class, so one can use
+/// sizeof(somemember), even though somemember is non-static. Clang does not
+/// allow nested classes access any non-static members of enclosing class.
+///
+/// Enclosing class have no special right to access memebers of the nested
+/// class.
+
+/// Enclosing class acts like namespace; Nested class is for better
+/// encapulasation
+
 
 class A {
 public:

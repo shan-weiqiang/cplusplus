@@ -1,3 +1,3 @@
 # cplusplus
 
-experiment with c++ language
+Experiment with C++
