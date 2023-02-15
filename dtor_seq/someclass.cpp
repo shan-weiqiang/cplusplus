@@ -1,23 +1,30 @@
 #include <iostream>
 
-class MemberClass {
-public:
+class MemberClass
+{
+ public:
   ~MemberClass();
 };
-MemberClass::~MemberClass() { std::cout << "dtor from MemeberClass~\n"; }
-class BaseClass {
-public:
+MemberClass::~MemberClass()
+{
+  std::cout << "dtor from MemeberClass~\n";
+}
+class BaseClass
+{
+ public:
   ~BaseClass();
 };
-class SomeClass : public BaseClass {
-private:
+class SomeClass : public BaseClass
+{
+ private:
   MemberClass m;
 
-public:
+ public:
   ~SomeClass();
 };
 
-int main() {
+int main()
+{
   SomeClass s;
   // this will first call BaseClass dtor, then MemberClass dtor, finally
   // SomeClass dtor

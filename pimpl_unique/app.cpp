@@ -1,6 +1,7 @@
 
 #include "someclass.h"
-int main() {
+int main()
+{
   SomeClass some;
   some.do_some_thing();
 }

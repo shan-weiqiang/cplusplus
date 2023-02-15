@@ -3,15 +3,18 @@
 #include <thread>
 
 /// since data is protected by different mutex data is not protected at all
-void increment(std::mutex *m, int *data) {
+void increment(std::mutex *m, int *data)
+{
   std::lock_guard<std::mutex> lck(*m);
-  for (int i = 0; i < 10000; ++i) {
+  for (int i = 0; i < 10000; ++i)
+  {
     ++(*data);
   }
 }
 
-int main() {
-  int i{0};
+int main()
+{
+  int i{ 0 };
 
   std::mutex m1_;
   std::mutex m2_;

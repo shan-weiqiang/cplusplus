@@ -2,21 +2,28 @@
 #include <iostream>
 #include <vector>
 
-struct T {
+struct T
+{
   int *a;
 };
 
-int *func(int &data) { return &data; }
+int *func(int &data)
+{
+  return &data;
+}
 
-int &&rva(int &data) { return static_cast<int &&>(data); }
+int &&rva(int &data)
+{
+  return static_cast<int &&>(data);
+}
 
-void foo() {
-
+void foo()
+{
   int x = 10;
   int *y = nullptr;
   int &&prvalue1 = 34;
   int &&prvalue2 = 34;
-  int ar[] = {1, 2, 3};
+  int ar[] = { 1, 2, 3 };
   T t;
 
   /// 1) If the argument is an unparenthesized id-expression or an
@@ -46,4 +53,7 @@ void foo() {
   decltype(prvalue1 + prvalue2) m = 34;
 }
 
-int main() { foo(); }
+int main()
+{
+  foo();
+}

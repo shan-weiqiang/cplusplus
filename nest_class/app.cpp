@@ -18,19 +18,27 @@
 /// Enclosing class acts like namespace; Nested class is for better
 /// encapulasation
 
-
-class A {
-public:
-  class B {
+class A
+{
+ public:
+  class B
+  {
     friend void friendofB(A::B *);
     int b;
 
-  public:
-    B() { std::cout << "B is being created..\n"; }
-    void print_g() { std::cout << "from nested b" << '\n'; }
+   public:
+    B()
+    {
+      std::cout << "B is being created..\n";
+    }
+    void print_g()
+    {
+      std::cout << "from nested b" << '\n';
+    }
     /// 也可以部分函数在类外定义
     void anotherfunc();
-    void access_enclosing_memebers() {
+    void access_enclosing_memebers()
+    {
       /// nested type 'B', 这里因为evaluate了a，所以不能访问
       /// Use of non-static data member 'a' of 'A' from
       //   std::cout << a << '\n';
@@ -44,10 +52,13 @@ public:
       std::cout << c << '\n';
     }
 
-    void test_friendofB() { friendofB(this); }
+    void test_friendofB()
+    {
+      friendofB(this);
+    }
   } b;
 
-private:
+ private:
   int a;
   const static char c = 'A';
 
@@ -59,21 +70,26 @@ private:
 
   /// D既有declaration，又有define，但是没有realization；
   /// 注意forward-declaration/definition/realization三个概念的不同
-  class D {
+  class D
+  {
     /// 这里必须是public，不然A的default constructor将被删除
-  public:
+   public:
     D();
-    void func_D() { std::cout << "Funtion from D\n"; }
+    void func_D()
+    {
+      std::cout << "Funtion from D\n";
+    }
   };
 
   /// 因为D已经在A中有定义（虽然没有具体实现），此处可以声明d对象;因为此处d的内存大小是已知的
   D d;
 
-public:
+ public:
   /// D虽然是私有变量，但是通过typedef一个public的D_, D_可以被外部使用
   typedef D D_;
 
-  void print_f() {
+  void print_f()
+  {
     b.print_g();
 
     /// enclosing类不能访问内嵌类的私有成员：'b' is a private member of 'A::B'
@@ -85,20 +101,27 @@ public:
   }
 };
 
-class A::C {};
+class A::C
+{
+};
 
 /// nested class 可以在外部实现
-void A::B::anotherfunc() {}
+void A::B::anotherfunc()
+{
+}
 
 /// 定义
-A::D::D() {}
+A::D::D()
+{
+}
 
 /// 内嵌类跟普通成员一样，也有访问权限，private的内嵌类无法在外部使用：'C' is a
 /// private member of 'A'
 // void friendofC(A::C*para){}
 
 /// 内嵌类的friend可以访问内嵌类的私有成员
-void friendofB(A::B *ptr) {
+void friendofB(A::B *ptr)
+{
   A a;
 
   /// 内嵌类的friend不是enclosing类的friend，不能访问enclosing类私有成员：'a' is
@@ -107,8 +130,8 @@ void friendofB(A::B *ptr) {
   std::cout << "comming from friendofB:" << ptr->b << '\n';
 }
 
-int main() {
-
+int main()
+{
   A a;
   a.print_f();
 
