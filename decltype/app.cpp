@@ -1,5 +1,6 @@
 #include <cxxabi.h>
 
+#include <algorithm>
 #include <functional>
 #include <iostream>
 #include <typeinfo>
@@ -107,6 +108,11 @@ int main()
   int x = 10;
   int &y = x;
   int &&a = 10;
+  std::cout << "a is lvalue, address:" << &a << std::endl;
+  int c = 3;
+  // std::cout << "std::move(c) is rvalue, can not take address:" << &(std::move(c)) << std::endl;
+  int m = std::move(c);
+  std::cout << "m is lvalue, address: " << &m << std::endl;
   // This is called array lvalue, which means an array which is lvalue
   // The element acess using subscript is also lvalue
   int arr[] = { 1, 2, 3 };
