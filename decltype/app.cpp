@@ -149,6 +149,7 @@ int main()
   ///   at first glance it is weired because a is rvalue reference, how can lvalue reference b points to a?
   ///   the key points here is that a is actually lvalue, it's a reference and it points to a rvalue, so it's called rvalue
   ///   reference
+  ///   IMPORTANT: in C++, a special case is that const lvalue reference can be assigned with rvalue
   std::cout << std::is_rvalue_reference<decltype(y)>::value << std::endl;
   std::cout << std::is_lvalue_reference<decltype(y)>::value << std::endl;
   std::cout << std::is_rvalue_reference<decltype(a)>::value << std::endl;
