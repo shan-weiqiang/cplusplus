@@ -3,7 +3,8 @@
 
 //  成员非静态方法重载时要考虑const, non-const, ref-qualified,
 //  non-ref-qualified。 累本身作为第一个参数（implicit object parameter),
-//  以下简称IOP.
+//  以下简称IOP. 注意： constructor、destructor、conversion function没有
+//  implicit object parameter,所以不能使用const或者ref-qualifier.
 //
 //
 //  没有const的情况：
