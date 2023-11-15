@@ -6,9 +6,10 @@
 //  以下简称IOP. 注意： constructor、destructor、conversion function没有
 //  implicit object parameter,所以不能使用const或者ref-qualifier.
 //
+//  带ref-qualifer与不带ref-qualifer的同名方法不能共存，带ref-qualifier的方法
+//  与不带ref-qualifier的方法不能相互重载
 //
 //  没有const的情况：
-//  带ref-qualifer与不带ref-qualifer的同名方法不能共存。
 //  不带ref-qualifer的方法：
 //     - 只会匹配non-const的IOP
 //     - 在non-const的前提下，同时支持左值和右值的IOP的传入
