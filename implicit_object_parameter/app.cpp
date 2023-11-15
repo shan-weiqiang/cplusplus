@@ -2,31 +2,33 @@
 #include <memory>
 
 //  成员非静态方法重载时要考虑const, non-const, ref-qualified,
-//  non-ref-qualified。 累本身作为第一个参数（implicit object parameter),
+//  non-ref-qualified。 类本身作为第一个参数（implicit object parameter),
 //  以下简称IOP. 注意： constructor、destructor、conversion function没有
 //  implicit object parameter,所以不能使用const或者ref-qualifier.
 //
 //  带ref-qualifer与不带ref-qualifer的同名方法不能共存，带ref-qualifier的方法
 //  与不带ref-qualifier的方法不能相互重载
+//  
+//  默认情况下，所有implicit object member function(https://en.cppreference.com/w/cpp/language/member_functions)
+//  都需要考虑const-qualifier|non-const-qualifier, non-ref-qualifer|(rvalue-ref-qualifier, lvalue-ref-qualifier), 
+//  共计：2x1+2x2=6种情况：
 //
-//  没有const的情况：
-//  不带ref-qualifer的方法：
-//     - 只会匹配non-const的IOP
-//     - 在non-const的前提下，同时支持左值和右值的IOP的传入
-//  带ref-qualifer的方法，则：
-//     - 带&的方法只能允许左值对象传入
-//     - 带&&的方法只能允许右值对象传入
+//  A. non-const-qualifier：
+//     #1. 不带ref-qualifer的方法：
+//         - IOP是non-const传入
+//         - IOP可以是左值，也可以是右值
+//     - 带ref-qualifer的方法，则：
+//       #2. 带&，则IOP只能以左值传入
+//       #3. 带&&，则IOP只能以右值传入
 //
-//  针对有const的情况：
-// An implicit object member function with a cv-qualifier sequence
-// of class X is treated as follows:
-// - no ref-qualifier: the implicit object parameter has type lvalue reference
-// to cv-qualified X and is additionally allowed to bind rvalue implied object
-// argument
-// - lvalue ref-qualifier: the implicit object parameter has type lvalue
-// reference to cv-qualified X
-// - rvalue ref-qualifier: the implicit object parameter has type rvalue
-// reference to cv-qualified X
+//  B. const-qualifier：
+//     #4. 不带ref-qualifer:
+//         - IOP是带const传入
+//         - IOP可以是常量左值，也可以是常量右值
+//         - IOP可以是非常量左值，也可以是非常量右值
+//     - 带ref-qualifier的方法，则：
+//       #5. 带&，则IOP以常量左值、或者非常量左值传入
+//       #6. 带&&，则IOP以常量右值、或者非常量右值传入
 
 class MemoryBlock {
 public:
