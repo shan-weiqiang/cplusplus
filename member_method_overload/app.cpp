@@ -7,7 +7,7 @@
 //  implicit object parameter,所以不能使用const或者ref-qualifier.
 //
 //  带ref-qualifer与不带ref-qualifer的同名方法不能共存，带ref-qualifier的方法
-//  与不带ref-qualifier的方法不能相互重载
+//  与不带ref-qualifier的方法不能相互重载，这包括带const和不带const的所有方法。
 //
 //  默认情况下，所有implicit object member
 //  function(https://en.cppreference.com/w/cpp/language/member_functions)
