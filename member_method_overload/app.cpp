@@ -25,14 +25,14 @@
 //
 //  B. const-qualifier：
 //     #4. 不带ref-qualifer:
-//         - IOP可以是常量左值（引用），非常量左值（引用），非常量右值（引用），也可以是常量右值引用
+//         -
+//         IOP可以是常量左值（引用），非常量左值（引用），非常量右值（引用），也可以是常量右值，常量右值引用
 //           （常量右值引用没有完美转发，则被看作左值）
 //     - 带ref-qualifier的方法，则：
-//     #5.带&，则IOP以常量左值(引用）、非常量左值（引用）、常量右值引用（常量右值引用没有完美转发，
-//          则被看作左值），非常量右值引用，非常量右值（重载优先级低于#6）
-//     #6.带&&，则IOP以非常量右值传入；重载优先级高于#5；注意右值引用传入后被视为左值
+//     #5.带&，则IOP以常量左值(引用）、非常量左值（引用）、常量右值，常量右值引用（常量右值引用没有完美转发，
+//          则被看作左值），非常量右值引用，非常量右值（以上右值和右值引用重载优先级低于#6）
+//     #6.带&&，则IOP以非常量右值，常量右值传入；重载优先级高于#5；注意右值引用传入后被视为左值
 //  重要：常量右值引用是個左值;
-//  常量右值本身在C++中是无法表示的，没有对应的expression
 
 class MemoryBlock
 {
@@ -88,6 +88,16 @@ class MemoryBlock
   }
 };
 
+// Class and Array type can have const qualified rvalue in C++, this can be created
+// by function return a const qualified class or array type
+// https://timsong-cpp.github.io/cppwp/n4861/expr.type#2
+
+const MemoryBlock create_const_rvalue()
+{
+  const MemoryBlock cm = MemoryBlock();
+  return cm;
+}
+
 int main()
 {
   std::cout << "<<<< #1 <<<<" << std::endl;
@@ -108,6 +118,8 @@ int main()
   // const MemoryBlock&& cmr=std::move(m);
   /// A: nok, only accept non const
   // cmr.non_const_non_ref();
+  // A: nok, only accept non const
+  // create_const_rvalue().non_const_non_ref_cant_overload();
   std::cout << "<<<< #2 <<<<" << std::endl;
 
   MemoryBlock n;
@@ -151,6 +163,9 @@ int main()
   const MemoryBlock&& cmr = MemoryBlock();
   /// #4: ok, const rvalue reference is lvalue, except using std::forward
   cmr.const_cant_overload();
+  // #4: ok, const rvalue
+  create_const_rvalue().const_cant_overload();
+
   std::cout << "<<<< #5 <<<<" << std::endl;
 
   /// #5: ok, const lvalue, overload void const_can_overload() const&, if only
@@ -166,6 +181,8 @@ int main()
   cmr.const_can_overload();
   /// #5: ok, non const rvalue reference
   non_const_rvalue_ref.const_can_overload();
+  // #5: ok, but overload priority lower than #6, can be testfied by comment out #6 method
+  create_const_rvalue().const_can_overload();
 
   std::cout << "<<<< #6 <<<<" << std::endl;
 
@@ -174,4 +191,6 @@ int main()
   /// const_can_overload() const& will be overloaded,since const lvalue
   /// reference can bind to rvalue
   MemoryBlock().const_can_overload();
+  // #6: ok, const rvalue
+  create_const_rvalue().const_can_overload();
 }

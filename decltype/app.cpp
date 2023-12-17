@@ -1,5 +1,3 @@
-#include <cxxabi.h>
-
 #include <algorithm>
 #include <functional>
 #include <iostream>
@@ -49,20 +47,17 @@ void foo()
   decltype(x) a = 1;
   /// abi::__cxa_demangle print the value type
   /// std::is... print whether it's reference
-  std::cout << abi::__cxa_demangle(typeid(a).name(), 0, 0, &status) << std::endl;
   std::cout << std::is_rvalue_reference<decltype(x)>::value << std::endl;
   std::cout << std::is_lvalue_reference<decltype(x)>::value << std::endl;
   std::cout << "<<<<<<<<<" << std::endl;
   // int*
   decltype(t.a) p = &a;
-  std::cout << abi::__cxa_demangle(typeid(p).name(), 0, 0, &status) << std::endl;
   std::cout << std::is_rvalue_reference<decltype(t.a)>::value << std::endl;
   std::cout << std::is_lvalue_reference<decltype(t.a)>::value << std::endl;
   std::cout << "<<<<<<<<<" << std::endl;
   // int&&
   decltype(prvalue1) dpravlue = 98;
   // This will not show reference infomation, only value type
-  std::cout << abi::__cxa_demangle(typeid(dpravlue).name(), 0, 0, &status) << std::endl;
   std::cout << std::is_rvalue_reference<decltype(prvalue1)>::value << std::endl;
   std::cout << std::is_lvalue_reference<decltype(prvalue1)>::value << std::endl;
   std::cout << "<<<<<<<<<" << std::endl;
@@ -78,7 +73,6 @@ void foo()
   decltype(rva(prvalue1)) xvalue = 23;
   decltype(std::move(x)) super = 45;
   decltype(rva(x)) q = 89;
-  std::cout << abi::__cxa_demangle(typeid(q).name(), 0, 0, &status) << std::endl;
   std::cout << std::is_rvalue_reference<decltype(rva(x))>::value << std::endl;
   std::cout << std::is_lvalue_reference<decltype(rva(x))>::value << std::endl;
 
