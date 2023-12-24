@@ -1,12 +1,22 @@
 
+#include <iostream>
 #include <memory>
-class SomeClass {
-public:
+
+template<typename T>
+class SomeTemplateClass
+{
+ public:
+  void print_size();
+};
+
+class SomeClass
+{
+ public:
   void do_some_thing();
   ~SomeClass();
   SomeClass();
 
-private:
+ private:
   class SomeClassImp;
   // if dtor or ctor are not defined after the definition SomeClassImp(compiler
   // generated ctor and dtor are at the definiton of the SomeClass, if user
@@ -47,6 +57,7 @@ private:
   // this to work, the complier need to compile the parent class ctor and dtor
   // with the definiton of the template data type in the same translation unit.
   std::unique_ptr<SomeClassImp> ptr;
+  SomeTemplateClass<SomeClassImp> size;
 
   // Following pattern compiles but might not work well, because inside the dtor
   // of SomeClass, will call delete ptr, but the ~SomeClassImp() funtion is not
