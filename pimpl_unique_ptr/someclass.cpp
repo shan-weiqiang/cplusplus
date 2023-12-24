@@ -12,31 +12,31 @@
 
 SomeClass::~SomeClass()
 {
-  // This testifies that print_size function is initialized after the complete definition of
-  // SomeClassImp
-  this->size.print_size();
+	// This testifies that print_size function is initialized after the complete definition of
+	// SomeClassImp
+	this->size.print_size();
 };
 SomeClass::SomeClass()
 {
-  this->size.print_size();
+	this->size.print_size();
 };
 class SomeClass::SomeClassImp
 {
- public:
-  void implementation()
-  {
-    std::cout << "implementing...\n";
-  }
+public:
+	void implementation()
+	{
+		std::cout << "implementing...\n";
+	}
 };
 void SomeClass::do_some_thing()
 {
-  ptr->implementation();
+	ptr->implementation();
 }
 
-template<typename T>
+template <typename T>
 void SomeTemplateClass<T>::print_size()
 {
-  std::cout << sizeof(T) << std::endl;
+	std::cout << sizeof(T) << std::endl;
 }
 // SomeClass::~SomeClass() = default;
 // SomeClass::SomeClass() = default;

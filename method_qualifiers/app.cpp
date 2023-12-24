@@ -36,56 +36,56 @@
 
 class MemoryBlock
 {
- public:
-  /// can not overload by ref-qualifier
-  void non_const_non_ref_cant_overload()
-  {
-    std::cout << __LINE__ << " Non const non ref method called" << std::endl;
-  }
-  /// Cannot overload a member function with ref-qualifier '&' with a member
-  /// function without a ref-qualifierclang(ref_qualifier_overload)
-  // void non_const_non_ref_cant_overload() &{
-  //   std::cout << "Non const non ref method called" << std::endl;
-  // }
+public:
+	/// can not overload by ref-qualifier
+	void non_const_non_ref_cant_overload()
+	{
+		std::cout << __LINE__ << " Non const non ref method called" << std::endl;
+	}
+	/// Cannot overload a member function with ref-qualifier '&' with a member
+	/// function without a ref-qualifierclang(ref_qualifier_overload)
+	// void non_const_non_ref_cant_overload() &{
+	//   std::cout << "Non const non ref method called" << std::endl;
+	// }
 
-  /// Cannot overload a member function with ref-qualifier '&&' with a member
-  /// function without a ref-qualifierclang(ref_qualifier_overload
-  // void non_const_non_ref_cant_overload() && {
-  //   std::cout << "Non const non ref method called" << std::endl;
-  // }
-  void non_const_can_overload() &
-  {
-    std::cout << __LINE__ << " Non const lvalue ref method called" << std::endl;
-  }
-  void non_const_can_overload() &&
-  {
-    std::cout << __LINE__ << " Non const rvalue ref method called" << std::endl;
-  }
+	/// Cannot overload a member function with ref-qualifier '&&' with a member
+	/// function without a ref-qualifierclang(ref_qualifier_overload
+	// void non_const_non_ref_cant_overload() && {
+	//   std::cout << "Non const non ref method called" << std::endl;
+	// }
+	void non_const_can_overload() &
+	{
+		std::cout << __LINE__ << " Non const lvalue ref method called" << std::endl;
+	}
+	void non_const_can_overload() &&
+	{
+		std::cout << __LINE__ << " Non const rvalue ref method called" << std::endl;
+	}
 
-  void const_cant_overload() const
-  {
-    std::cout << __LINE__ << " Const non ref method called" << std::endl;
-  }
-  /// Cannot overload a member function with ref-qualifier '&' with a member
-  /// function without a ref-qualifierclang(ref_qualifier_overload)
-  // void const_cant_overload() const& {
-  //   std::cout << "Const non ref method called" << std::endl;
-  // }
+	void const_cant_overload() const
+	{
+		std::cout << __LINE__ << " Const non ref method called" << std::endl;
+	}
+	/// Cannot overload a member function with ref-qualifier '&' with a member
+	/// function without a ref-qualifierclang(ref_qualifier_overload)
+	// void const_cant_overload() const& {
+	//   std::cout << "Const non ref method called" << std::endl;
+	// }
 
-  /// Cannot overload a member function with ref-qualifier '&&' with a member
-  /// function without a ref-qualifierclang(ref_qualifier_overload)
-  // void const_cant_overload() const&& {
-  //   std::cout << "Const non ref method called" << std::endl;
-  // }
+	/// Cannot overload a member function with ref-qualifier '&&' with a member
+	/// function without a ref-qualifierclang(ref_qualifier_overload)
+	// void const_cant_overload() const&& {
+	//   std::cout << "Const non ref method called" << std::endl;
+	// }
 
-  void const_can_overload() const&
-  {
-    std::cout << __LINE__ << " Const lvalue ref method called" << std::endl;
-  }
-  void const_can_overload() const&&
-  {
-    std::cout << __LINE__ << " Const rvalue ref method called" << std::endl;
-  }
+	void const_can_overload() const&
+	{
+		std::cout << __LINE__ << " Const lvalue ref method called" << std::endl;
+	}
+	void const_can_overload() const&&
+	{
+		std::cout << __LINE__ << " Const rvalue ref method called" << std::endl;
+	}
 };
 
 // Class and Array type can have const qualified rvalue in C++, this can be created
@@ -94,103 +94,103 @@ class MemoryBlock
 
 const MemoryBlock create_const_rvalue()
 {
-  const MemoryBlock cm = MemoryBlock();
-  return cm;
+	const MemoryBlock cm = MemoryBlock();
+	return cm;
 }
 
 int main()
 {
-  std::cout << "<<<< #1 <<<<" << std::endl;
-  MemoryBlock m;
-  /// #1: ok, non-const lvalue
-  m.non_const_non_ref_cant_overload();
-  /// #1: ok, non-const rvalue
-  MemoryBlock().non_const_non_ref_cant_overload();
-  MemoryBlock& mr = m;
-  /// #1: ok, lvalue reference
-  mr.non_const_non_ref_cant_overload();
-  MemoryBlock&& m_rvalue_ref = MemoryBlock();
-  // #1: ok, rvalue reference
-  m_rvalue_ref.non_const_non_ref_cant_overload();
-  const MemoryBlock cm;
-  /// A: nok, only accept non const
-  // cm.non_const_non_ref();
-  // const MemoryBlock&& cmr=std::move(m);
-  /// A: nok, only accept non const
-  // cmr.non_const_non_ref();
-  // A: nok, only accept non const
-  // create_const_rvalue().non_const_non_ref_cant_overload();
-  std::cout << "<<<< #2 <<<<" << std::endl;
+	std::cout << "<<<< #1 <<<<" << std::endl;
+	MemoryBlock m;
+	/// #1: ok, non-const lvalue
+	m.non_const_non_ref_cant_overload();
+	/// #1: ok, non-const rvalue
+	MemoryBlock().non_const_non_ref_cant_overload();
+	MemoryBlock& mr = m;
+	/// #1: ok, lvalue reference
+	mr.non_const_non_ref_cant_overload();
+	MemoryBlock&& m_rvalue_ref = MemoryBlock();
+	// #1: ok, rvalue reference
+	m_rvalue_ref.non_const_non_ref_cant_overload();
+	const MemoryBlock cm;
+	/// A: nok, only accept non const
+	// cm.non_const_non_ref();
+	// const MemoryBlock&& cmr=std::move(m);
+	/// A: nok, only accept non const
+	// cmr.non_const_non_ref();
+	// A: nok, only accept non const
+	// create_const_rvalue().non_const_non_ref_cant_overload();
+	std::cout << "<<<< #2 <<<<" << std::endl;
 
-  MemoryBlock n;
-  /// #2: ok, non const lvalue, overload void non_const_can_overload() &, if
-  /// only define void non_const_can_overload() &&, there will be overload
-  /// failure
-  n.non_const_can_overload();
-  MemoryBlock& n_lvalue_ref = n;
-  /// #2: ok, non const lvalue reference
-  n_lvalue_ref.non_const_can_overload();
+	MemoryBlock n;
+	/// #2: ok, non const lvalue, overload void non_const_can_overload() &, if
+	/// only define void non_const_can_overload() &&, there will be overload
+	/// failure
+	n.non_const_can_overload();
+	MemoryBlock& n_lvalue_ref = n;
+	/// #2: ok, non const lvalue reference
+	n_lvalue_ref.non_const_can_overload();
 
-  /// #2: ok, non const rvalue reference
-  MemoryBlock&& n_rvalue_ref = MemoryBlock();
-  n_rvalue_ref.non_const_can_overload();
+	/// #2: ok, non const rvalue reference
+	MemoryBlock&& n_rvalue_ref = MemoryBlock();
+	n_rvalue_ref.non_const_can_overload();
 
-  std::cout << "<<<< #3 <<<<" << std::endl;
+	std::cout << "<<<< #3 <<<<" << std::endl;
 
-  /// #3: ok, non const rvalue, overload void non_const_can_overload() &&, if
-  /// only define void non_const_can_overload() &, there will be overload
-  /// failure
-  MemoryBlock().non_const_can_overload();
+	/// #3: ok, non const rvalue, overload void non_const_can_overload() &&, if
+	/// only define void non_const_can_overload() &, there will be overload
+	/// failure
+	MemoryBlock().non_const_can_overload();
 
-  /// A: nok, only accetp non const
-  /// cm.non_const_can_overload();
-  std::cout << "<<<< #4 <<<<" << std::endl;
+	/// A: nok, only accetp non const
+	/// cm.non_const_can_overload();
+	std::cout << "<<<< #4 <<<<" << std::endl;
 
-  /// #4: ok, non-const lvalue
-  m.const_cant_overload();
-  /// #4: ok, non-const lvalue reference
-  mr.const_cant_overload();
-  /// #4: ok, const lvalue
-  cm.const_cant_overload();
-  const MemoryBlock& cons_lvalue_ref = m;
-  /// #4: ok, const lvalue reference
-  cons_lvalue_ref.const_cant_overload();
-  /// #4: ok, non-const rvalue
-  MemoryBlock().const_cant_overload();
-  MemoryBlock&& non_const_rvalue_ref = MemoryBlock();
-  /// #4: ok, non const rvalue reference
-  non_const_rvalue_ref.const_cant_overload();
-  const MemoryBlock&& cmr = MemoryBlock();
-  /// #4: ok, const rvalue reference is lvalue, except using std::forward
-  cmr.const_cant_overload();
-  // #4: ok, const rvalue
-  create_const_rvalue().const_cant_overload();
+	/// #4: ok, non-const lvalue
+	m.const_cant_overload();
+	/// #4: ok, non-const lvalue reference
+	mr.const_cant_overload();
+	/// #4: ok, const lvalue
+	cm.const_cant_overload();
+	const MemoryBlock& cons_lvalue_ref = m;
+	/// #4: ok, const lvalue reference
+	cons_lvalue_ref.const_cant_overload();
+	/// #4: ok, non-const rvalue
+	MemoryBlock().const_cant_overload();
+	MemoryBlock&& non_const_rvalue_ref = MemoryBlock();
+	/// #4: ok, non const rvalue reference
+	non_const_rvalue_ref.const_cant_overload();
+	const MemoryBlock&& cmr = MemoryBlock();
+	/// #4: ok, const rvalue reference is lvalue, except using std::forward
+	cmr.const_cant_overload();
+	// #4: ok, const rvalue
+	create_const_rvalue().const_cant_overload();
 
-  std::cout << "<<<< #5 <<<<" << std::endl;
+	std::cout << "<<<< #5 <<<<" << std::endl;
 
-  /// #5: ok, const lvalue, overload void const_can_overload() const&, if only
-  /// define void const_can_overload() const&&, there will be overload failure
-  cm.const_can_overload();
-  /// #5: ok, const lvalue reference
-  cons_lvalue_ref.const_can_overload();
-  /// #5: ok, non const lvalue reference
-  n_lvalue_ref.const_can_overload();
-  /// #5: ok, non const lvalue
-  m.const_can_overload();
-  /// #5: ok, const rvalue reference is lvalue, except using std::forward
-  cmr.const_can_overload();
-  /// #5: ok, non const rvalue reference
-  non_const_rvalue_ref.const_can_overload();
-  // #5: ok, but overload priority lower than #6, can be testfied by comment out #6 method
-  create_const_rvalue().const_can_overload();
+	/// #5: ok, const lvalue, overload void const_can_overload() const&, if only
+	/// define void const_can_overload() const&&, there will be overload failure
+	cm.const_can_overload();
+	/// #5: ok, const lvalue reference
+	cons_lvalue_ref.const_can_overload();
+	/// #5: ok, non const lvalue reference
+	n_lvalue_ref.const_can_overload();
+	/// #5: ok, non const lvalue
+	m.const_can_overload();
+	/// #5: ok, const rvalue reference is lvalue, except using std::forward
+	cmr.const_can_overload();
+	/// #5: ok, non const rvalue reference
+	non_const_rvalue_ref.const_can_overload();
+	// #5: ok, but overload priority lower than #6, can be testfied by comment out #6 method
+	create_const_rvalue().const_can_overload();
 
-  std::cout << "<<<< #6 <<<<" << std::endl;
+	std::cout << "<<<< #6 <<<<" << std::endl;
 
-  /// #6: ok, non const rvalue；overload void const_can_overload() const&&, if
-  /// void const_can_overload() const&& is not defined, void
-  /// const_can_overload() const& will be overloaded,since const lvalue
-  /// reference can bind to rvalue
-  MemoryBlock().const_can_overload();
-  // #6: ok, const rvalue
-  create_const_rvalue().const_can_overload();
+	/// #6: ok, non const rvalue；overload void const_can_overload() const&&, if
+	/// void const_can_overload() const&& is not defined, void
+	/// const_can_overload() const& will be overloaded,since const lvalue
+	/// reference can bind to rvalue
+	MemoryBlock().const_can_overload();
+	// #6: ok, const rvalue
+	create_const_rvalue().const_can_overload();
 }

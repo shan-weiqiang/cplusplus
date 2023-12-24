@@ -1,14 +1,19 @@
 #include "someclass.h"
 
-class SomeUser {
+class SomeUser
+{
 public:
-  void do_some_thing() { some_.do_some_thing(); }
+	void do_some_thing()
+	{
+		some_.do_some_thing();
+	}
 
 private:
-  SomeClass some_;
+	SomeClass some_;
 };
 
-int main() {
-  SomeUser foo;
-  foo.do_some_thing();
+int main()
+{
+	SomeUser foo;
+	foo.do_some_thing();
 }

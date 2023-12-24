@@ -2,33 +2,33 @@
 
 class MemberClass
 {
- public:
-  ~MemberClass();
+public:
+	~MemberClass();
 };
 MemberClass::~MemberClass()
 {
-  std::cout << "dtor from MemeberClass~\n";
+	std::cout << "dtor from MemeberClass~\n";
 }
 class BaseClass
 {
- public:
-  ~BaseClass();
+public:
+	~BaseClass();
 };
 class SomeClass : public BaseClass
 {
- private:
-  MemberClass m;
+private:
+	MemberClass m;
 
- public:
-  ~SomeClass();
+public:
+	~SomeClass();
 };
 
 int main()
 {
-  SomeClass s;
-  // this will first call BaseClass dtor, then MemberClass dtor, finally
-  // SomeClass dtor
-  s.~SomeClass();
-  std::cout << "SomeClass destructor called~\n";
-  exit(0);
+	SomeClass s;
+	// this will first call BaseClass dtor, then MemberClass dtor, finally
+	// SomeClass dtor
+	s.~SomeClass();
+	std::cout << "SomeClass destructor called~\n";
+	exit(0);
 }

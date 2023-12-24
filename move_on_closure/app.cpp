@@ -27,69 +27,76 @@
 // case where the parameter is a const rvalue reference (const T&&).
 std::function<void()> a;
 
-struct A {
-  A() = default;
-  ~A() noexcept = default;
-  A(const A &) {
-    std::cout << "A::copy construct\n";
-  }
-  A(A &&) noexcept {
-    std::cout << "A::move construct\n";
-  }
-  A &operator=(const A &) = default;
-  A &operator=(A &&) noexcept = default;
+struct A
+{
+	A() = default;
+	~A() noexcept = default;
+	A(const A&)
+	{
+		std::cout << "A::copy construct\n";
+	}
+	A(A&&) noexcept
+	{
+		std::cout << "A::move construct\n";
+	}
+	A& operator=(const A&) = default;
+	A& operator=(A&&) noexcept = default;
 
-  double c = 23;
+	double c = 23;
 };
 
 template <typename T>
-void traits() {
-  std::cout << std::boolalpha << "trivially_copy_constructible? "
-            << std::is_trivially_copy_constructible<T>::value << "\ntrivially_move_constructible? "
-            << std::is_trivially_move_constructible<T>::value << '\n';
+void traits()
+{
+	std::cout << std::boolalpha << "trivially_copy_constructible? "
+			  << std::is_trivially_copy_constructible<T>::value
+			  << "\ntrivially_move_constructible? "
+			  << std::is_trivially_move_constructible<T>::value << '\n';
 }
 
-std::function<void()> func() {
-  A a;
-  return [&a]() { std::cout << "value of c:" << a.c << std::endl; };
+std::function<void()> func()
+{
+	A a;
+	return [&a]() { std::cout << "value of c:" << a.c << std::endl; };
 }
 
-int main() {
-  A a;
+int main()
+{
+	A a;
 
-  {
-    // 闭包的移动和拷贝：
-    // 1.
-    // 如果闭包以拷贝的方式捕获了周边变量，则无论是闭包被移动还是被赋值，该捕获的变量都是拷贝
-    // (很有可能闭包类型并没有实现移动构造，而是只有拷贝构造)
-    // 2. 如果闭包以引用的方式捕获了周边变量，则闭包本身是trivially_copy_constructible
-    // 和trivially_move_constructible
-    // 3. 因为闭包本身就是一个局部创建的对象，所以闭包执行的时候要保证其捕获的变量还在声明周期内
+	{
+		// 闭包的移动和拷贝：
+		// 1.
+		// 如果闭包以拷贝的方式捕获了周边变量，则无论是闭包被移动还是被赋值，该捕获的变量都是拷贝
+		// (很有可能闭包类型并没有实现移动构造，而是只有拷贝构造)
+		// 2. 如果闭包以引用的方式捕获了周边变量，则闭包本身是trivially_copy_constructible
+		// 和trivially_move_constructible
+		// 3. 因为闭包本身就是一个局部创建的对象，所以闭包执行的时候要保证其捕获的变量还在声明周期内
 
-    func()();
+		func()();
 
-    auto f = func();
-    std::cout << "now call some function to corrupt stack memory" << std::endl;
-    // c的值已经被覆盖，undefined behavior
-    f();
+		auto f = func();
+		std::cout << "now call some function to corrupt stack memory" << std::endl;
+		// c的值已经被覆盖，undefined behavior
+		f();
 
-    std::cout << "capture by value\n";
-    const auto closure = [a = std::move(a)] {};  // A::move construct
-    traits<decltype(closure)>();                 // not trivially_copy_constructible, not
-                                                 // trivially_move_constructible
+		std::cout << "capture by value\n";
+		const auto closure = [a = std::move(a)] {}; // A::move construct
+		traits<decltype(closure)>(); // not trivially_copy_constructible, not
+			// trivially_move_constructible
 
-    // copy constructor of the closure copies the object captured by value
-    const auto copy_constructed = closure;  // A::copy construct
+		// copy constructor of the closure copies the object captured by value
+		const auto copy_constructed = closure; // A::copy construct
 
-    // move constructor of the closure copies (does not move) the object
-    // captured by value
-    const auto move_constructed = std::move(closure);  // A::copy construct
-  }
+		// move constructor of the closure copies (does not move) the object
+		// captured by value
+		const auto move_constructed = std::move(closure); // A::copy construct
+	}
 
-  {
-    std::cout << "\ncapture by reference\n";
-    const auto closure = [&a] {};  // capture by reference
-    traits<decltype(closure)>();   // trivially_copy_constructible,
-                                   // trivially_move_constructible
-  }
+	{
+		std::cout << "\ncapture by reference\n";
+		const auto closure = [&a] {}; // capture by reference
+		traits<decltype(closure)>(); // trivially_copy_constructible,
+			// trivially_move_constructible
+	}
 }
