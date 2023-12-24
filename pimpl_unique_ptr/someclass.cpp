@@ -5,8 +5,8 @@
 // INFO: It's ok to put dtor before definition of SomeClassImp, even here SomeClassImp
 // is still incomplete type. This compiles becuause std::unique_ptr is template, so the
 // two phase namelook up here applies. The actual initialization of the dtor of the unique_ptr
-
 // will be at the end of the translation unit. So there will be no incomplete type problem.
+
 // SomeClass::~SomeClass() = default;
 // SomeClass::SomeClass() = default;
 
