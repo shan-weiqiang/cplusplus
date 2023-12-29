@@ -14,6 +14,13 @@
 			"https_proxy": "http://192.168.0.101:7890"
 		}
 	},
+
+	"mounts": [
+		// Share SSH credentials with host machine
+		"source=${localEnv:HOME}/.ssh,target=/home/swq/.ssh,type=bind,consistency=cached",
+		// Share zsh auto-completion history with host machine
+		"source=${localEnv:HOME}/.zsh_history,target=/home/swq/.zsh_history,type=bind,consistency=cached"
+	],
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -24,10 +31,13 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"terminal.integrated.defaultProfile.linux": "bash",
+				"terminal.integrated.defaultProfile.linux": "zsh",
 				"terminal.integrated.profiles.linux": {
 					"bash": {
 						"path": "/usr/bin/bash"
+					},
+					"zsh": {
+						"path": "/usr/bin/zsh"
 					}
 				}
 			},
