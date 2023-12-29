@@ -14,8 +14,11 @@ RUN apt-get update && \
         zsh \
     && rm -rf /var/lib/apt/lists/*
 
-# RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
+# Set locale
+RUN apt install -y locales
+RUN locale-gen zh_CN
+RUN locale-gen zh_CN.UTF-8
+ENV LC_ALL zh_CN.UTF-8
 
 RUN useradd -m -s /bin/bash swq && \
     echo 'swq:swq' | chpasswd
@@ -33,7 +36,7 @@ RUN echo "parse_git_branch() {" >> /home/swq/.bashrc \
     && echo "export PS1='\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ '" >> /home/swq/.bashrc
 
 # install ohmyzsh
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/shan-weiqiang/zsh-in-docker/releases/download/v0.0.5/zsh-in-docker.1.sh)" -- \
     -x \
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-autosuggestions \
