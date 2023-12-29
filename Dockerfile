@@ -27,11 +27,17 @@ RUN usermod -aG sudo swq
 USER swq
 
 ### setup git branch view in cli ############
-run echo "parse_git_branch() {" >> /home/swq/.bashrc \
+RUN echo "parse_git_branch() {" >> /home/swq/.bashrc \
     && echo "    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\\\1)/'" >> /home/swq/.bashrc \
     && echo "}" >> /home/swq/.bashrc \
     && echo "export PS1='\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ '" >> /home/swq/.bashrc
 
+# install ohmyzsh
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
+    -x \
+    -p https://github.com/zsh-users/zsh-completions \
+    -p https://github.com/zsh-users/zsh-autosuggestions \
+    -t robbyrussell
 
 # Set the working directory to the user's home directory
 WORKDIR /home/swq
