@@ -12,6 +12,7 @@ RUN apt-get update && \
         clang-format \
         vim \
         zsh \
+        clangd \
     && rm -rf /var/lib/apt/lists/*
 
 # Set locale

@@ -46,7 +46,8 @@
 				"ms-python.python",
 				"yzhang.markdown-all-in-one",
 				"ms-vscode.cpptools",
-				"ms-vscode.cpptools-extension-pack"
+				"ms-vscode.cpptools-extension-pack",
+				"llvm-vs-code-extensions.vscode-clangd"
 			]
 		}
 	}
