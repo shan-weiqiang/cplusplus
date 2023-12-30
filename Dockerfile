@@ -15,10 +15,10 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Set locale
-RUN apt install -y locales
-RUN locale-gen zh_CN
-RUN locale-gen zh_CN.UTF-8
-ENV LC_ALL zh_CN.UTF-8
+# RUN apt-get install -y locales
+# RUN locale-gen zh_CN
+# RUN locale-gen zh_CN.UTF-8
+# ENV LC_ALL zh_CN.UTF-8
 
 RUN useradd -m -s /bin/bash swq && \
     echo 'swq:swq' | chpasswd
