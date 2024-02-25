@@ -7,12 +7,13 @@
 		"context": "..",
 		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
 		"dockerfile": "../Dockerfile",
-		"args": {
-			"HTTP_PROXY": "http://192.168.0.101:7890",
-			"HTTPS_PROXY": "http://192.168.0.101:7890",
-			"http_proxy": "http://192.168.0.101:7890",
-			"https_proxy": "http://192.168.0.101:7890"
-		}
+					// use default config in ~/.docker/config.json, use sed -i '' "s#192.168.0.101#$(hostname)#g" ~/.docker/config.json to update ip address on mac
+		// "args": {
+		// 	"HTTP_PROXY": "http://192.168.0.109:7890",
+		// 	"HTTPS_PROXY": "http://192.168.0.109:7890",
+		// 	"http_proxy": "http://192.168.0.109:7890",
+		// 	"https_proxy": "http://192.168.0.109:7890"
+		// }
 	},
 
 	"mounts": [
@@ -48,7 +49,8 @@
 				"yzhang.markdown-all-in-one",
 				"ms-vscode.cpptools",
 				"ms-vscode.cpptools-extension-pack",
-				"llvm-vs-code-extensions.vscode-clangd"
+				"llvm-vs-code-extensions.vscode-clangd",
+				"codeium.codeium"
 			]
 		}
 	}
