@@ -1,6 +1,5 @@
 {
     "C_Cpp.intelliSenseEngine": "disabled",
-    "editor.fontFamily": "SF Mono, Monaco",
     "files.associations": {
         "iostream": "cpp",
         "array": "cpp",
