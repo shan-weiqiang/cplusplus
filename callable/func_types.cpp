@@ -23,15 +23,15 @@ type_func *func_ptr2 = func2;
 // initialized)clang(illegal_initializer) type_func func3 = func1;
 
 void compare_func(type_func func1, type_func func2) {
-  if (func1 == func2) {
-    std::cout << "func1 is equal to func2" << std::endl;
-  } else {
-    std::cout << std::boolalpha << std::is_pointer<decltype(func1)>::value
-              << std::endl;
-    std::cout << std::boolalpha << std::is_pointer<decltype(func2)>::value
-              << std::endl;
-    std::cout << "func1 is not equal to func2" << std::endl;
-  }
+    if (func1 == func2) {
+        std::cout << "func1 is equal to func2" << std::endl;
+    } else {
+        std::cout << std::boolalpha << std::is_pointer<decltype(func1)>::value
+                  << std::endl;
+        std::cout << std::boolalpha << std::is_pointer<decltype(func2)>::value
+                  << std::endl;
+        std::cout << "func1 is not equal to func2" << std::endl;
+    }
 }
 
 // 错误，不可以直接返回函数类型

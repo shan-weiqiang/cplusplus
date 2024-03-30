@@ -1,5 +1,5 @@
 - [Expressions](#expressions)
-  - [Value Category](#value-category)
+  - [Value Category◊](#value-category)
   - [Variables](#variables)
 - [What `decaltype` does](#what-decaltype-does)
 
@@ -10,7 +10,7 @@ https://en.cppreference.com/w/cpp/language/expressions
 
 Each C++ expression (an operator with its operands, a literal, a variable name, etc.) is characterized by two independent properties: a type and a value category. Each expression has some non-reference type, and each expression belongs to exactly one of the three primary value categories: *prvalue*, *xvalue*, and *lvalue*.
 
-## Value Category
+## Value Category◊
 
 https://en.cppreference.com/w/cpp/language/value_category
 
