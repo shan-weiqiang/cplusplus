@@ -8,7 +8,7 @@
             "name": "a.out",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/a.out",
+            "program": "${workspaceFolder}/case_study/lamda_segfault/build/app",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
