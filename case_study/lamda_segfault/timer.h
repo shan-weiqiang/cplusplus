@@ -58,7 +58,8 @@ class timer : public std::enable_shared_from_this<timer> {
         fn_();
         //   reset timer start timepoint
         t.expires_at(t.expiry() + asio::chrono::milliseconds(interval));
-        t.async_wait([this, wptr = std::weak_ptr<timer>{shared_from_this()}](std::error_code ec) {if (ec == asio::error::operation_aborted) {
+        t.async_wait([this, wptr = std::weak_ptr<timer>{shared_from_this()}](std::error_code ec) {
+            if (ec == asio::error::operation_aborted) {
                 std::cout << "io context called aborted timer handler" << std::endl;
                 return;
             } else {
