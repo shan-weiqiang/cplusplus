@@ -1,7 +1,23 @@
-
+#include "s.h"
+#include <iostream>
 void f();
 void g();
-int main(){
+
+bool t = false;
+
+// If app depend on lib a and lib b, then reg(..) will be called twice
+// which leads to abort. Since both lib a and lib b contain Trouble t
+// global variable. They exist independently in lib a and lib b.
+void reg(Trouble *) {
+    if (t) {
+        std::cerr << "trouble has been registered before, bad things might happen here" << std::endl;
+        // exit(1);
+    } else {
+        t = true;
+        std::cout << "trouble registered" << std::endl;
+    }
+}
+int main() {
 
     // a has f(); b has both f() and g()
     // during compile-link time, the behavior is following:
@@ -24,6 +40,11 @@ int main(){
     //    resolved, it will ignore all the applicable symbols appearing after
     // 3. The order of apperance of libraries is important since it might be
     //    determining which symbols are used in which libraries.
+    // 4. For global variables, constructor will be called multiple times at
+    //    the same address if there are multiple same-named instances
+
+    // Note: to reproduce above behavior, remove the dependency of static lib s
+    // in both lib a and lib b; otherwise, there will be abort.
     f();
     g();
 }
