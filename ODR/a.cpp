@@ -27,7 +27,8 @@ void __attribute__((constructor))a_print() {
     //    instances both in lib a and in lib b, the initialization code for both lib a
     //    and lib b will call constructor of Trouble for t, however, ODR implies that
     //    there must be only one global unique address for the same name, here 't', so
-    //    lib a and lib b will call constructor individually at the same address.
+    //    lib a and lib b will both construct t individually at the same memory address(
+    //     address of t).
     printf("%p\n", &Trouble::m);
     printf("%p\n", &t);
 }
