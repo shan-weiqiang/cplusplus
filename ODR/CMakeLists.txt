@@ -3,4 +3,5 @@ project(app)
 add_library(a SHARED a.cpp)
 add_library(b SHARED b.cpp)
 add_executable(app app.cpp)
+# order or a and b influence the link results
 target_link_libraries(app PRIVATE a b)
