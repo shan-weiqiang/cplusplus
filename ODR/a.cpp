@@ -31,3 +31,6 @@ void __attribute__((constructor))a_print() {
     printf("%p\n", &Trouble::m);
     printf("%p\n", &t);
 }
+
+// 1. test if multi definition in different tu can be compiled into one static lib?
+// 2. test if visibility attribute applies both to symbol consumer and provider
