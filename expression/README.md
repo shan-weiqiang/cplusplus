@@ -93,7 +93,7 @@ value type(eg,T) and value category and yields following types accordingly:
 
 - if value category of expression is xvalue, it yields T&&
 - if value category of expression is lvalue, it yields T&
-- if value category of expression is rvalue, it yields T
+- if value category of expression is prvalue, it yields T
 
 Note: if variable id-expression or class memeber access expression is parenthesized, it is treated as ordinary lvalue
 expression(which is reasonable, because named variables are always lvalue expressions)
