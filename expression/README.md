@@ -60,6 +60,8 @@ https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers
 
 https://accu.org/journals/overload/20/111/overload111.pdf#page=9
 
+- Remember that “&&” indicates a universal reference only where type deduction takes place.  Where there’s no type deduction, there’s no universal reference.  In such cases, “&&” in type declarations always means rvalue reference.
+
 
 ## Variables
 
