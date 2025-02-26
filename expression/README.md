@@ -60,12 +60,33 @@ https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers
 
 https://accu.org/journals/overload/20/111/overload111.pdf#page=9
 
+## Reference Collapsing Rules
+
+- An rvalue reference to an rvalue reference becomes (‘collapses into’) an rvalue reference.
+- All other references to references (i.e., all combinations involving an lvalue reference) collapse into an lvalue reference.
+
 ## Key Points & Golden Rules
 
 - Remember that “&&” indicates a universal reference only where type deduction takes place.  Where there’s no type deduction, there’s no universal reference.  In such cases, “&&” in type declarations always means rvalue reference.
 - lvalueness or rvalueness of an expression is independent of its type, it’s possible to have lvalues whose type is rvalue reference, and it’s also possible to have rvalues of the type rvalue reference
 - Apply std::move to rvalue references and std::forward to universal references
 - Only use std::forward with universal references
+- Universal reference type deduction is the only situation a template parameter is deduced as reference(when passed type is of lvalue).
+
+# Template Parameter Deduction
+
+During compile time compiler has mainly two ways to deduce template parameter types: from user and auto deduction.
+
+## From User
+
+This is simple. Whatever user specifies, compiler will use them. If user specified reference, reference collapsing rules apply.
+
+## Auto Deduction
+
+Auto deduction happens mainly on (function templates deduction)[https://en.cppreference.com/w/cpp/language/template_argument_deduction]. Since C++ 17, class template parameter can also be deduced: (Class template argument deduction (CTAD) (since C++17))[https://en.cppreference.com/w/cpp/language/class_template_argument_deduction].
+
+Auto deduction, including `auto` keyword is fully explained in the book *Effective Modern C++*. One thing to note here, as stated before:
+
 - Universal reference type deduction is the only situation a template parameter is deduced as reference(when passed type is of lvalue).
 
 
