@@ -83,7 +83,7 @@ This is simple. Whatever user specifies, compiler will use them. If user specifi
 
 ## Auto Deduction
 
-Auto deduction happens mainly on (function templates deduction)[https://en.cppreference.com/w/cpp/language/template_argument_deduction]. Since C++ 17, class template parameter can also be deduced: (Class template argument deduction (CTAD) (since C++17))[https://en.cppreference.com/w/cpp/language/class_template_argument_deduction].
+Auto deduction happens mainly on [function templates deduction](https://en.cppreference.com/w/cpp/language/template_argument_deduction). Since C++ 17, class template parameter can also be deduced: [Class template argument deduction (CTAD) (since C++17)](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction).
 
 Auto deduction, including `auto` keyword is fully explained in the book *Effective Modern C++*. One thing to note here, as stated before:
 
