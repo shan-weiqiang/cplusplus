@@ -62,6 +62,8 @@ https://accu.org/journals/overload/20/111/overload111.pdf#page=9
 
 ## Reference Collapsing Rules
 
+https://en.cppreference.com/w/cpp/language/reference
+
 - An rvalue reference to an rvalue reference becomes (‘collapses into’) an rvalue reference.
 - All other references to references (i.e., all combinations involving an lvalue reference) collapse into an lvalue reference.
 
