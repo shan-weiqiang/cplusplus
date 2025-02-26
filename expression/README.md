@@ -2,16 +2,17 @@
   - [Type](#type)
   - [Value Category](#value-category)
   - [Type \& ValueCategory are independent](#type--valuecategory-are-independent)
-- [Universal Reference](#universal-reference)
-  - [Reference Collapsing Rules](#reference-collapsing-rules)
-  - [Key Points \& Golden Rules](#key-points--golden-rules)
-- [Template Parameter Deduction](#template-parameter-deduction)
-  - [From User](#from-user)
-  - [Auto-Deduction and `auto`](#auto-deduction-and-auto)
+- [Type Deduction](#type-deduction)
+  - [When does it happens](#when-does-it-happens)
+  - [Function template parameter type deduction](#function-template-parameter-type-deduction)
+  - [`auto`](#auto)
+  - [More about Universal Reference](#more-about-universal-reference)
+    - [Reference Collapsing Rules](#reference-collapsing-rules)
+    - [Key Points \& Golden Rules](#key-points--golden-rules)
 - [Named Variables are lvalues](#named-variables-are-lvalues)
-- [Use of decltype](#use-of-decltype)
+- [Use of `decltype`](#use-of-decltype)
   - [Print valueness](#print-valueness)
-- [Use of declval](#use-of-declval)
+- [Use of `declval`](#use-of-declval)
 
 
 # Expressions
@@ -106,39 +107,76 @@ an xvalue if target-type is an rvalue reference to object type; [swq: how `std::
 a prvalue otherwise.
 </blockquote>
 
-# Universal Reference
+
+# Type Deduction
+
+## When does it happens
+
+We consider two occasions where type deduction happens:
+
+- [Function template parameter type deduction]((https://en.cppreference.com/w/cpp/language/template_argument_deduction).)
+- `auto`
+
+Additionally, a special kind of type deduction, universal reference is considered. 
+
+During compile time compiler has mainly two ways to deduce template parameter types: from user and auto deduction. In the case of user input, hatever user specifies, compiler will use them. If user specified reference, reference collapsing rules apply. Also in C++ 17, class template parameter type can also be deduced: [Class template argument deduction (CTAD) (since C++17)](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction).
+
+## Function template parameter type deduction
+
+Note: Most content of this paragraph comes from the book: *Effective Modern C++, Scott Meyers*. I only copies them here to make this artical complete.
+
+Take:
+
+```c++
+template<typename T>
+void f(ParamType param);
+f(expr); // deduce T and ParamType from expr
+```
+
+- Case 1: ParamType is a Reference or Pointer, but not a Universal Reference
+  - If expr’s type is a reference, ignore the reference part
+  - Then pattern-match expr’s type against ParamType to determine T.
+- Case 2: ParamType is a Universal Reference
+  - If expr is an lvalue, both T and ParamType are deduced to be lvalue references. That’s doubly unusual. First, it’s the only situation in  template type deduction where T is deduced to be a reference. Second, although ParamType is declared using the syntax for an rvalue reference, its deduced type is an lvalue reference.
+  - If expr is an rvalue, the “normal” (i.e., Case 1) rules apply.
+- Case 3: ParamType is Neither a Pointer nor a Reference
+  - As before, if expr’s type is a reference, ignore the reference part
+  - If, after ignoring expr’s reference-ness, expr is const, ignore that, too. If it’s volatile, also ignore that.
+
+## `auto`
+
+It's essentially the same as function template parameter type deduction like above, the mappings relationships are:
+
+- `auto` --> `T`
+- Expression before `=` --> `ParamType`
+- Expression after `=` --> `expr`
+
+For example: 
+
+```c++
+auto x = 27; // case 3 (x is neither ptr nor reference)
+const auto cx = x; // case 3 (cx isn't either)
+const auto& rx = x; // case 1 (rx is a non-universal ref.)
+// T --> auto; const auto& --> ParamType; x --> expr
+```
+
+## More about Universal Reference
 
 [Universal References in C++11, Scott Meyers](https://github.com/shan-weiqiang/cplusplus/blob/main/expression/universal-references-and-reference-collapsing-scott-meyers.pdf)
 
-## Reference Collapsing Rules
+### Reference Collapsing Rules
 
 [C++ Reference](https://en.cppreference.com/w/cpp/language/reference)
 
 - An rvalue reference to an rvalue reference becomes (‘collapses into’) an rvalue reference.
 - All other references to references (i.e., all combinations involving an lvalue reference) collapse into an lvalue reference.
 
-## Key Points & Golden Rules
+### Key Points & Golden Rules
 
 - Remember that “&&” indicates a universal reference only where type deduction takes place.  Where there’s no type deduction, there’s no universal reference.  In such cases, “&&” in type declarations always means rvalue reference.
 - Apply std::move to rvalue references and std::forward to universal references
 - Only use std::forward with universal references
-- Universal reference type deduction is the only situation a template parameter is deduced as reference(when passed type is of lvalue).
-
-# Template Parameter Deduction
-
-During compile time compiler has mainly two ways to deduce template parameter types: from user and auto deduction.
-
-## From User
-
-This is simple. Whatever user specifies, compiler will use them. If user specified reference, reference collapsing rules apply.
-
-## Auto-Deduction and `auto`
-
-Auto deduction happens mainly on [function templates deduction](https://en.cppreference.com/w/cpp/language/template_argument_deduction). Since C++ 17, class template parameter can also be deduced: [Class template argument deduction (CTAD) (since C++17)](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction).
-
-Auto deduction, including `auto` keyword is fully explained in the book *Effective Modern C++*. One thing to note here, as stated before:
-
-- Universal reference type deduction is the only situation a template parameter is deduced as reference(when passed type is of lvalue).
+- **Universal reference type deduction is the only situation a template parameter is deduced as reference(when passed type is of lvalue).**
 
 
 # Named Variables are lvalues
@@ -168,7 +206,7 @@ class Gadget {
 ```
 
 
-# Use of decltype
+# Use of `decltype`
 
 [C++ decltype](https://en.cppreference.com/w/cpp/language/decltype)
 
@@ -264,7 +302,7 @@ int main() {
 }
 ```
 
-# Use of declval
+# Use of `declval`
 
 [C++ declval](https://en.cppreference.com/w/cpp/utility/declval)
 
