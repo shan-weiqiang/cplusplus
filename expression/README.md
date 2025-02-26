@@ -101,10 +101,9 @@ Note that the valueness of expression `static_cast` is decided by [`static_cast`
 <blockquote>
 As with all cast expressions, the result is:
 
-an lvalue if target-type is an lvalue reference type or an rvalue reference to function type(since C++11);
-an xvalue if target-type is an rvalue reference to object type; [swq: how `std::move` is implemented]
-(since C++11)
-a prvalue otherwise.
+- An lvalue if target-type is an lvalue reference type or an rvalue reference to function type(since C++11);
+- A xvalue if target-type is an rvalue reference to object type; [swq: how `std::move` is implemented] (since C++11)
+- A prvalue otherwise.
 </blockquote>
 
 
