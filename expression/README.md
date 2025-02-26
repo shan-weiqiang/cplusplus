@@ -130,6 +130,8 @@ Take:
 template<typename T>
 void f(ParamType param);
 f(expr); // deduce T and ParamType from expr
+
+// Above pseudo code can represent most cases, since reference, const are not allowed insdie parameter list: template<typename const T> and template<typename T&> and template<typename T&&> are both not valid. However, when user specify T, const and reference types can be used and reference collapsing rules apply.
 ```
 
 - Case 1: ParamType is a Reference or Pointer, but not a Universal Reference
