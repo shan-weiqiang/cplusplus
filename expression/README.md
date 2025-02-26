@@ -66,7 +66,7 @@ https://accu.org/journals/overload/20/111/overload111.pdf#page=9
 - lvalueness or rvalueness of an expression is independent of its type, it’s possible to have lvalues whose type is rvalue reference, and it’s also possible to have rvalues of the type rvalue reference
 - Apply std::move to rvalue references and std::forward to universal references
 - Only use std::forward with universal references
-- Universal reference type deduction is the only situation a template parameter is deduced as reference(when passed type is of lvalue). This rule is not applicable to `const`.
+- Universal reference type deduction is the only situation a template parameter is deduced as reference(when passed type is of lvalue).
 
 
 ## Variables
