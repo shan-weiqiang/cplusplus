@@ -31,12 +31,12 @@
 #include <iostream>
 #include <vector>
 
-int main()
-{
-	/// C++ do not support vector<const T>
-	/// const vector<T> almost have the same effect, the amount of the element is const and the returned element is also const
-	const std::vector<int> const_arr;
-	/// both of the following code are not compiling
-	// const_arr.push_back(4);
-	// const_arr.back() = 10;
+int main() {
+    /// C++ do not support vector<const T>
+    /// const vector<T> almost have the same effect, the amount of the element is const and the returned element is also const
+    /// std::vector has a const version of method for each element access method, the returned element is also const
+    const std::vector<int> const_arr;
+    /// both of the following code are not compiling
+    // const_arr.push_back(4);
+    // const_arr.back() = 10;
 }
